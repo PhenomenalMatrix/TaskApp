@@ -9,12 +9,16 @@ import android.view.Menu;
 import android.widget.Button;
 
 import com.example.taskapp.models.Task;
+import com.example.taskapp.ui.home.HomeFragment;
+import com.example.taskapp.ui.onboard.BoardFragment;
+import com.example.taskapp.ui.onboard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,10 +30,16 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private int open;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (false){
+            startActivity(new Intent(this, OnBoardActivity.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,9 +99,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == 100 && data != null){
-            Task task = (Task) data.getSerializableExtra("task");
-            Log.e("TAG", "title: " + task.getTitle());
-            Log.e("TAG", "title: " + task.getDesc());
+//            Task task = (Task) data.getSerializableExtra("task");
+//            Log.e("TAG", "title: " + task.getTitle());
+//            Log.e("TAG", "title: " + task.getDesc());
+            Fragment fragment =  getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            if(fragment!=null){
+                fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode,resultCode,data);
+            }
         }
     }
 }
