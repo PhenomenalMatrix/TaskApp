@@ -1,6 +1,8 @@
 package com.example.taskapp.ui.onboard;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.taskapp.MainActivity;
@@ -42,29 +45,39 @@ public class BoardFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.imageView);
         TextView textTitle = view.findViewById(R.id.textTitle);
         Button buttonfinish = view.findViewById(R.id.buttonFinish);
+        LinearLayout back =  view.findViewById(R.id.fragment_board);
         int pos = getArguments().getInt("pos");
         switch (pos){
             case 0:
                 imageView.setImageResource(R.drawable.first);
                 textTitle.setText("Privet");
+                back.setBackgroundResource(R.drawable.nightf);
                 break;
             case 1:
                 imageView.setImageResource(R.drawable.second);
                 textTitle.setText("Kak dela ?");
+                back.setBackgroundResource(R.drawable.nightt);
                 break;
             case 2:
                 imageView.setImageResource(R.drawable.third);
                 textTitle.setText("Che delaesh");
+                back.setBackgroundResource(R.drawable.nighttr);
                 buttonfinish.setVisibility(View.VISIBLE);
                 buttonfinish.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        saveIsShown();
                         startActivity(new Intent(getContext(), MainActivity.class));
-
+                        getActivity().finish();
                     }
                 });
                 break;
         }
+    }
+
+    private void saveIsShown(){
+        SharedPreferences preferences = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        preferences.edit().putBoolean("isShown",true).apply();
     }
 
     @Override

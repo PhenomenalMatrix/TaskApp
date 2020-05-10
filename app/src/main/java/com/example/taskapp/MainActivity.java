@@ -1,6 +1,8 @@
 package com.example.taskapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,19 +32,22 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private int open;
+    private boolean open;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (false){
+        if (!isShown()){
             startActivity(new Intent(this, OnBoardActivity.class));
             finish();
             return;
         }
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //кнопка с письмом
         //кнопка с письмом
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
+
+    private  boolean isShown(){
+        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        return preferences.getBoolean("isShown",true);
+
+    }
+
+
+
     //меню
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,15 +92,30 @@ public class MainActivity extends AppCompatActivity {
         Log.d("des","des");
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_quit:
-                finish();
-                return true;
+                SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+                preferences.edit().putBoolean("isShown", false).apply();
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+//    private void isOpened(){
+//        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+//        preferences.edit().putBoolean("isOp",true).apply();
+//    }
+//
+//    private  boolean isop(){
+//        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+//        return preferences.getBoolean("isOp",false);
+//
+//    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -108,4 +137,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }

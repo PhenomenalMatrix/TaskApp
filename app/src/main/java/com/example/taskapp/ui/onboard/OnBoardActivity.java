@@ -20,7 +20,6 @@ public class OnBoardActivity extends AppCompatActivity  {
 
     Button buttonSkip;
     ViewPager viewPager;
-    int i;
     TabLayout tabLayout;
 
     @Override
@@ -35,10 +34,8 @@ public class OnBoardActivity extends AppCompatActivity  {
         buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (i==0){
                     viewPager.setCurrentItem(2);
                     buttonSkip.setVisibility(View.INVISIBLE);
-                }
             }
         });
     }

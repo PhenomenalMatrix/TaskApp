@@ -6,7 +6,9 @@
     android:gravity="center_horizontal"
     android:padding="32dp"
     android:orientation="vertical"
+    android:id="@+id/fragment_board"
     tools:context=".ui.onboard.BoardFragment">
+
 
 
 
@@ -17,11 +19,13 @@
         android:src="@drawable/ic_launcher_background"
         />
 
+
     <TextView
         android:id="@+id/textTitle"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFF"
         android:textSize="20dp"
         android:text="@string/hello_blank_fragment" />
 
@@ -30,6 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="#FFFF"
+
         android:text="@string/hello_blank_fragment" />
 
     <Button
@@ -39,8 +45,11 @@
         android:background="@android:color/holo_purple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFF"
+
         android:text="finish"
         />
+
 
 
 
