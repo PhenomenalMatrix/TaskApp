@@ -24,4 +24,8 @@ public interface TaskDao {
 
     @Query("DELETE from task WHERE id IN (:idList)")
     void deleteByIdList(int idList);
+
+    @Query("UPDATE task Set title = :newTitle, `desc` = :newDesc WHERE id IN (:idList)")
+    void updateSalaryByIdList(int idList ,String newTitle, String newDesc);
+
 }

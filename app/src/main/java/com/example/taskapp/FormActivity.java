@@ -1,5 +1,6 @@
 package com.example.taskapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,11 +10,14 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.taskapp.models.Task;
+import com.example.taskapp.ui.home.TaskAdapter;
 
 public class FormActivity extends AppCompatActivity {
 
     private EditText editTitle;
     private EditText editDesc;
+    private Task task;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,17 @@ public class FormActivity extends AppCompatActivity {
         }
         editTitle = findViewById(R.id.editTitle);
         editDesc = findViewById(R.id.editDes);
+        task = new Task();
+        if (getIntent() != null) {
+            task = (Task) getIntent().getSerializableExtra("ss");
+            editTitle.setText(task.getTitle());
+            editDesc.setText(task.getDesc());
+//            App.getInstance().getDatabase().taskDao().updateSalaryByIdList();
+        }
+
     }
+
+
 
     public void onClick(View view) {
         String title = editTitle.getText().toString().trim();
