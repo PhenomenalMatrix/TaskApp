@@ -31,11 +31,10 @@ public class FormActivity extends AppCompatActivity {
         String title = editTitle.getText().toString().trim();
         String desc = editDesc.getText().toString().trim();
         Task task = new Task(title, desc);
-        Intent intent = new Intent();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("key",task.toString());
-        intent.putExtra("task", task);
-        setResult(RESULT_OK, intent);
+        App.getInstance().getDatabase().taskDao().insert(task);
+//        Intent intent = new Intent();
+//        intent.putExtra("task", task);
+//        setResult(RESULT_OK, intent);
         finish();
     }
 
