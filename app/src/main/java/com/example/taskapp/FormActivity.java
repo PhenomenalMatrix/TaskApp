@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.taskapp.models.Task;
@@ -29,28 +30,40 @@ public class FormActivity extends AppCompatActivity {
         }
         editTitle = findViewById(R.id.editTitle);
         editDesc = findViewById(R.id.editDes);
-        task = new Task();
-        if (getIntent() != null) {
+        Button button = findViewById(R.id.save);
+        if (getIntent().getSerializableExtra("ss") != null) {
             task = (Task) getIntent().getSerializableExtra("ss");
             editTitle.setText(task.getTitle());
             editDesc.setText(task.getDesc());
-//            App.getInstance().getDatabase().taskDao().updateSalaryByIdList();
+            button.setVisibility(View.GONE);
+//          App.getInstance().getDatabase().taskDao().updateSalaryByIdList();
         }
+//        if (task != null) {
+//            editTitle.setHint("enter text");
+//            editDesc.setHint("enter text");
+//        }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = editTitle.getText().toString().trim();
+                String desc = editDesc.getText().toString().trim();
+                Task task = new Task(title, desc);
+                App.getInstance().getDatabase().taskDao().insert(task);
+                finish();
+            }
+        });
 
     }
 
 
 
-    public void onClick(View view) {
-        String title = editTitle.getText().toString().trim();
-        String desc = editDesc.getText().toString().trim();
-        Task task = new Task(title, desc);
-        App.getInstance().getDatabase().taskDao().insert(task);
-//        Intent intent = new Intent();
-//        intent.putExtra("task", task);
-//        setResult(RESULT_OK, intent);
-        finish();
-    }
+//    public void onClick(View view) {
+//        String title = editTitle.getText().toString().trim();
+//        String desc = editDesc.getText().toString().trim();
+//        Task task = new Task(title, desc);
+//        App.getInstance().getDatabase().taskDao().insert(task);
+//        finish();
+//    }
 
     @Override
     protected void onDestroy() {

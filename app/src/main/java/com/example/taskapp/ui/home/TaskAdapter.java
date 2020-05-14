@@ -28,6 +28,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
+    public static final String EDIT_TEXT_KEY = "text_key_edit";
     private ArrayList<Task> list;
     private OnitemCickListner onitemCickListner;
 
