@@ -28,7 +28,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
-    public static final String EDIT_TEXT_KEY = "text_key_edit";
     private ArrayList<Task> list;
     private OnitemCickListner onitemCickListner;
 
@@ -71,11 +70,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textTitle;
         private TextView textDesc;
-        Task task;
+
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

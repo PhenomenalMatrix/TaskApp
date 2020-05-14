@@ -1,9 +1,7 @@
 package com.example.taskapp;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.taskapp.models.Task;
-import com.example.taskapp.ui.home.TaskAdapter;
 
-public class FormActivity extends AppCompatActivity {
+public class FormActivity extends AppCompatActivity  {
 
     private EditText editTitle;
     private EditText editDesc;
@@ -31,11 +28,21 @@ public class FormActivity extends AppCompatActivity {
         editTitle = findViewById(R.id.editTitle);
         editDesc = findViewById(R.id.editDes);
         Button button = findViewById(R.id.save);
+        Button buttonChange = findViewById(R.id.change);
         if (getIntent().getSerializableExtra("ss") != null) {
             task = (Task) getIntent().getSerializableExtra("ss");
             editTitle.setText(task.getTitle());
             editDesc.setText(task.getDesc());
             button.setVisibility(View.GONE);
+            buttonChange.setVisibility(View.VISIBLE);
+            buttonChange.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    finish();
+
+                }
+            });
 //          App.getInstance().getDatabase().taskDao().updateSalaryByIdList();
         }
 //        if (task != null) {
@@ -70,4 +77,6 @@ public class FormActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("des","des");
     }
+
+
 }
