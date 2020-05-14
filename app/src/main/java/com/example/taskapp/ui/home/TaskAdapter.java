@@ -1,16 +1,12 @@
 package com.example.taskapp.ui.home;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -23,8 +19,6 @@ import com.example.taskapp.models.Task;
 import com.example.taskapp.ui.OnitemCickListner;
 
 import java.util.ArrayList;
-
-import static android.app.Activity.RESULT_OK;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
@@ -54,6 +48,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         {
             holder.itemView.setBackgroundColor(Color.parseColor("#E5E5E5"));
         }
+        FormActivity formActivity = new FormActivity();
+
     }
 
     @Override
@@ -88,8 +84,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     Task task = new Task();
                     task.setTitle(textTitle.getText().toString());
                     task.setDesc(textDesc.getText().toString());
+                    int posit = list.get(getAdapterPosition()).getId();
+                    intent.putExtra("sss",posit);
                     intent.putExtra("ss", task);
                     v.getContext().startActivity(intent);
+//                    FormActivity formActivity = new FormActivity();
+//                    formActivity.setId(posit);
+
 
 
 

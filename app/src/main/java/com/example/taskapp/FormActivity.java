@@ -2,6 +2,7 @@ package com.example.taskapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,12 @@ public class FormActivity extends AppCompatActivity  {
     private EditText editTitle;
     private EditText editDesc;
     private Task task;
+    Button buttonChange;
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
     @Override
@@ -28,7 +35,7 @@ public class FormActivity extends AppCompatActivity  {
         editTitle = findViewById(R.id.editTitle);
         editDesc = findViewById(R.id.editDes);
         Button button = findViewById(R.id.save);
-        Button buttonChange = findViewById(R.id.change);
+        buttonChange = findViewById(R.id.change);
         if (getIntent().getSerializableExtra("ss") != null) {
             task = (Task) getIntent().getSerializableExtra("ss");
             editTitle.setText(task.getTitle());
@@ -38,11 +45,18 @@ public class FormActivity extends AppCompatActivity  {
             buttonChange.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Task task = new Task();
+                    if (getIntent().getSerializableExtra("sss") != null){
+                        Intent intent = getIntent();
+                        Integer posit = intent.getIntExtra("sss",1);
+                    App.getInstance().getDatabase().taskDao().updateSalaryByIdList(posit,editTitle.getText().toString(), editDesc.getText().toString());
+                    Log.d("pzd","us "+ posit.toString());
                     finish();
+                    }
 
                 }
             });
+
 //          App.getInstance().getDatabase().taskDao().updateSalaryByIdList();
         }
 //        if (task != null) {
@@ -61,6 +75,9 @@ public class FormActivity extends AppCompatActivity  {
         });
 
     }
+
+
+
 
 
 
