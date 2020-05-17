@@ -13,10 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        style="@style/EditTextStyle"
         android:hint="Задача"/>
 
     <EditText
         android:id="@+id/editDes"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -24,17 +26,13 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/save"
+        android:background="@drawable/button_rounded_gradient"
+        android:textColor="@android:color/white"
+        android:onClick="onClick"
         android:text="save"
         />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/change"
-        android:visibility="invisible"
-        android:text="change"
-        />
+
 
 
 
