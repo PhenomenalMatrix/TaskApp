@@ -29,6 +29,10 @@ public interface TaskDao {
     @Delete
     void delete(Task task);
 
+    @Query("SELECT * FROM task order by title asc ")
+    List<Task> sort();
+
+
 //  // worked sql
 //    @Query("DELETE from task WHERE id IN (:idList)")
 //    void deleteByIdList(int idList);

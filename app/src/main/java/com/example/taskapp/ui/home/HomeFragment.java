@@ -31,6 +31,8 @@ public class HomeFragment extends Fragment {
 
     private TaskAdapter adapter;
     private ArrayList<Task> list = new ArrayList<>();
+    LinearLayoutManager layoutManager;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,6 +48,10 @@ public class HomeFragment extends Fragment {
         list.addAll(App.getInstance().getDatabase().taskDao().getAll());
         adapter = new TaskAdapter(list);
         recyclerView.setAdapter(adapter);
+        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
         adapter.setOnitemCickListner(new OnitemCickListner() {
             @Override
             public void onItemClick(int pos) {
@@ -75,6 +81,22 @@ public class HomeFragment extends Fragment {
                     }
                 });
         builder.show();
+    }
+
+    public void sortL() {
+        list.clear();
+        list.addAll(App.getInstance().getDatabase().taskDao().sort());
+        adapter.notifyDataSetChanged();
+        layoutManager.setReverseLayout(false);
+        layoutManager.setStackFromEnd(false);
+    }
+
+    public void initList() {
+        list.clear();
+        list.addAll(App.getInstance().getDatabase().taskDao().getAll());
+        adapter.notifyDataSetChanged();
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
     }
 
     private void loadData() {

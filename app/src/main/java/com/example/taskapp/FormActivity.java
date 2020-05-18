@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.taskapp.models.Task;
 
 public class FormActivity extends AppCompatActivity  {
@@ -43,12 +45,16 @@ public class FormActivity extends AppCompatActivity  {
         String desc = editDesc.getText().toString().trim();
         if (title.isEmpty()){
             editTitle.setError("Введите задачу");
-//            editTitle.animate().scaleY(1.5f).start();
+            YoYo.with(Techniques.Shake)
+                    .duration(400)
+                    .playOn(editTitle);
             return;
         }
         if (desc.isEmpty()){
             editDesc.setError("Введите описание");
-//            editTitle.animate().scaleY(1.5f).start();
+            YoYo.with(Techniques.Shake)
+                    .duration(400)
+                    .playOn(editDesc);
             return;
         }
         if (task !=null){

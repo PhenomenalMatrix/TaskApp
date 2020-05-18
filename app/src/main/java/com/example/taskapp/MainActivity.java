@@ -8,14 +8,21 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Adapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.taskapp.models.Task;
 import com.example.taskapp.ui.OnitemCickListner;
+import com.example.taskapp.ui.home.HomeFragment;
+import com.example.taskapp.ui.home.TaskAdapter;
 import com.example.taskapp.ui.onboard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,9 +31,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements OnitemCickListner {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private Task task;
+
 
 
     @Override
@@ -41,8 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnitemCickListner
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //кнопка с письмом
-        //кнопка с письмом
+        //кнопка с plus
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,20 +116,27 @@ public class MainActivity extends AppCompatActivity implements OnitemCickListner
                 preferences.edit().putBoolean("isShown", false).apply();
             finish();
             return true;
+            case R.id.sort:
+                sort();
+                //                Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-//    private void isOpened(){
-//        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
-//        preferences.edit().putBoolean("isOp",true).apply();
-//    }
-//
-//    private  boolean isop(){
-//        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
-//        return preferences.getBoolean("isOp",false);
-//
-//    }
+
+    private boolean flag;
+    public void sort() {
+        if (flag) {
+            Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            ((HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0)).sortL();
+            flag = false;
+        } else {
+            Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            ((HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0)).initList();
+            flag = true;
+        }
+    }
 
 
     @Override
@@ -139,18 +157,6 @@ public class MainActivity extends AppCompatActivity implements OnitemCickListner
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(resultCode == RESULT_OK && requestCode == 100 && data != null){
-////            Task task = (Task) data.getSerializableExtra("task");
-////            Log.e("TAG", "title: " + task.getTitle());
-////            Log.e("TAG", "title: " + task.getDesc());
-//            Fragment fragment =  getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-//            if(fragment!=null){
-//                fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode,resultCode,data);
-//            }
-//        }
-//    }
+
 
 }
