@@ -17,8 +17,12 @@ public interface TaskDao {
     @Query("SELECT * FROM task")
     List<Task> getAll();
 
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task ORDER BY id DESC")
     LiveData<List<Task>> getAllLive();
+
+    @Query("SELECT * FROM task ORDER BY title ASC")
+    LiveData<List<Task>> getAllSortedLive();
+
 
     @Insert
     void insert(Task task);
@@ -29,8 +33,6 @@ public interface TaskDao {
     @Delete
     void delete(Task task);
 
-    @Query("SELECT * FROM task order by title asc ")
-    List<Task> sort();
 
 
 //  // worked sql

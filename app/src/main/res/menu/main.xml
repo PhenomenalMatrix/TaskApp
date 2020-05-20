@@ -4,7 +4,7 @@
     <item
         android:id="@+id/sort"
         android:icon="@drawable/sort"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         />
 
     <item
@@ -12,8 +12,4 @@
         android:title="Quit"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_setting"
-        android:title="Setting"
-        app:showAsAction="never" />
 </menu>

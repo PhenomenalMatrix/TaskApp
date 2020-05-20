@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +34,7 @@ public class HomeFragment extends Fragment {
 
     private TaskAdapter adapter;
     private ArrayList<Task> list = new ArrayList<>();
-    LinearLayoutManager layoutManager;
+    private  boolean sorted = false;
 
 
 
@@ -48,10 +51,6 @@ public class HomeFragment extends Fragment {
         list.addAll(App.getInstance().getDatabase().taskDao().getAll());
         adapter = new TaskAdapter(list);
         recyclerView.setAdapter(adapter);
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(layoutManager);
         adapter.setOnitemCickListner(new OnitemCickListner() {
             @Override
             public void onItemClick(int pos) {
@@ -83,21 +82,7 @@ public class HomeFragment extends Fragment {
         builder.show();
     }
 
-    public void sortL() {
-        list.clear();
-        list.addAll(App.getInstance().getDatabase().taskDao().sort());
-        adapter.notifyDataSetChanged();
-        layoutManager.setReverseLayout(false);
-        layoutManager.setStackFromEnd(false);
-    }
 
-    public void initList() {
-        list.clear();
-        list.addAll(App.getInstance().getDatabase().taskDao().getAll());
-        adapter.notifyDataSetChanged();
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-    }
 
     private void loadData() {
         App.getInstance().getDatabase().taskDao().getAllLive().observe(this, new Observer<List<Task>>() {
@@ -110,5 +95,34 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void loadDataSorted() {
+        App.getInstance().getDatabase().taskDao().getAllSortedLive().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                list.clear();
+                list.addAll(tasks);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.sort){
+            if(sorted) {
+                loadData();
+                sorted = false;
+            }else{
+                loadDataSorted();
+                sorted = true;
+            }
+        }
+            return true;
+    }
 }

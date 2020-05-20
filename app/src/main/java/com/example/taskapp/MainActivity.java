@@ -12,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.taskapp.login.PhoneActivity;
 import com.example.taskapp.models.Task;
 import com.example.taskapp.ui.OnitemCickListner;
 import com.example.taskapp.ui.home.HomeFragment;
@@ -19,6 +20,7 @@ import com.example.taskapp.ui.home.TaskAdapter;
 import com.example.taskapp.ui.onboard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,7 +51,11 @@ public class MainActivity extends AppCompatActivity implements OnitemCickListner
             finish();
             return;
         }
-
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            startActivity(new Intent(this, PhoneActivity.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements OnitemCickListner
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         View headerLayout = navigationView.getHeaderView(0);
-        ImageView headerImageView = headerLayout.findViewById(R.id.imageView);
         headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,33 +115,18 @@ public class MainActivity extends AppCompatActivity implements OnitemCickListner
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        fragment.getChildFragmentManager().getFragments().get(0).onOptionsItemSelected(item);
         switch (item.getItemId()){
             case R.id.action_quit:
                 SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
                 preferences.edit().putBoolean("isShown", false).apply();
             finish();
             return true;
-            case R.id.sort:
-                sort();
-                //                Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-    private boolean flag;
-    public void sort() {
-        if (flag) {
-            Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            ((HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0)).sortL();
-            flag = false;
-        } else {
-            Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            ((HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0)).initList();
-            flag = true;
-        }
-    }
 
 
     @Override

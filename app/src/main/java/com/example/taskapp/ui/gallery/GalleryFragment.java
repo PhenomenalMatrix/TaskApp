@@ -35,8 +35,7 @@ public class GalleryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
+        galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         return root;
     }
@@ -69,7 +68,6 @@ public class GalleryFragment extends Fragment {
 
     private void getFiles(){
         File folder = new File(Environment.getExternalStorageDirectory(), "DCIM/Camera");
-//        if (!folder.exists()) folder.mkdir();
         for (File file : folder.listFiles()){
             list.add(file);
             galleryAdapter.notifyDataSetChanged();

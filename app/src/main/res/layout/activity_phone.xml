@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".login.PhoneActivity"
+    android:padding="22dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/button_rounded"
+    >
+
+    <com.github.pinball83.maskededittext.MaskedEditText
+        android:padding="22dp"
+        android:id="@+id/editPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:mask="+996********* "
+        app:notMaskedSymbol="*"
+        app:maskIconColor="@color/colorPrimary"
+        />
+
+    <Button
+        android:background="@drawable/button_rounded_gradient"
+        android:layout_width="match_parent"
+        android:text="Продолжить"
+        android:onClick="onClick"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
