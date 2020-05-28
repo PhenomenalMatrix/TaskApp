@@ -1,5 +1,6 @@
 package com.example.taskapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,10 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.taskapp.models.Task;
+import com.example.taskapp.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FormActivity extends AppCompatActivity  {
 
@@ -41,6 +48,27 @@ public class FormActivity extends AppCompatActivity  {
 
 
     public void onClick(View view) {
+        room();
+        firebs();
+        finish();
+    }
+
+    private void firebs() {
+        FirebaseFirestore.getInstance().collection("tasks")
+                .add(task)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentReference> task) {
+                        if(task.isSuccessful()) {
+                            Toast.makeText(FormActivity.this, "Успешно", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(FormActivity.this, "Ошибка", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void room() {
         String title = editTitle.getText().toString().trim();
         String desc = editDesc.getText().toString().trim();
         if (title.isEmpty()){
@@ -67,8 +95,8 @@ public class FormActivity extends AppCompatActivity  {
             task.setDesc(desc);
             App.getInstance().getDatabase().taskDao().insert(task);
         }
-        finish();
     }
+
 
     @Override
     protected void onDestroy() {
