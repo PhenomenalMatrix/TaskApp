@@ -98,7 +98,7 @@ public class PhoneActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-
+                    Toast.makeText(PhoneActivity.this,"Добро пожаловать", Toast.LENGTH_SHORT).show();
                 }else {
                     Log.e("Phone", "Error = "+ task.getException().getMessage());
                     Toast.makeText(PhoneActivity.this,"Ошибка авторизации", Toast.LENGTH_SHORT).show();

@@ -9,11 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.taskapp.login.PhoneActivity;
 import com.example.taskapp.models.Task;
 import com.example.taskapp.ui.OnitemCickListner;
 import com.example.taskapp.ui.onboard.OnBoardActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -40,11 +42,11 @@ public class MainActivity extends AppCompatActivity implements OnitemCickListner
             finish();
             return;
         }
-//        if(FirebaseAuth.getInstance().getCurrentUser() == null){
-//            startActivity(new Intent(this, PhoneActivity.class));
-//            finish();
-//            return;
-//        }
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            startActivity(new Intent(this, PhoneActivity.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
